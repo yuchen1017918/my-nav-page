@@ -28,14 +28,11 @@ function updateDateTime() {
     document.getElementById("datetime").textContent = now.toLocaleDateString("zh-CN", options);
 }
 
-// ==============================================
-// 自动IP定位 + 城市翻译 + 实时温度（完美无跨域版）
-// ==============================================
 async function renderWeather() {
     const weatherEl = document.getElementById("weather");
     weatherEl.innerHTML = `<i class="fas fa-location-arrow"></i><span>获取中...</span>`;
 
-    // 城市英文 → 中文 翻译表（你可以自己加）
+    // 城市英文 → 中文 翻译表（可自行扩展）
     const cityMap = {
         "Beijing": "北京",
         "Shanghai": "上海",
@@ -46,21 +43,11 @@ async function renderWeather() {
         "Wuhan": "武汉",
         "Xian": "西安",
         "Chongqing": "重庆",
-        "Tianjin": "天津",
-        "Nanjing": "南京",
-        "Suzhou": "苏州",
-        "Zhengzhou": "郑州",
-        "Changsha": "长沙",
-        "Shenyang": "沈阳",
-        "Qingdao": "青岛",
-        "Xiamen": "厦门",
-        "Dalian": "大连",
-        "Kunming": "昆明",
-        "Fuzhou": "福州"
+        "Tianjin": "天津"
     };
 
     try {
-        // 1. 免费IP定位（无跨域，稳定）
+        // 1. 用支持跨域的api.ip.sb获取IP定位（本地和GitHub Pages都能用）
         const locRes = await fetch("https://api.ip.sb/geoip/");
         const loc = await locRes.json();
         
@@ -68,20 +55,21 @@ async function renderWeather() {
         let lat = loc.latitude || 30.27;
         let lon = loc.longitude || 120.15;
 
-        // 2. ✅ 城市翻译：英文 → 中文
+        // 2. 城市英文自动翻译成中文
         let cityCn = cityMap[cityEn] || cityEn;
 
-        // 3. 查询温度（稳定无跨域）
+        // 3. 用Open-Meteo查询实时温度（无跨域限制）
         const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`);
         const weather = await weatherRes.json();
         let temp = weather.current_weather?.temperature || "未知";
 
-        // 4. 最终显示：城市·温度
+        // 4. 显示格式：城市·温度
         weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${temp}℃</span>`;
 
     } catch (err) {
-        console.error("获取失败", err);
-        weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>杭州·25℃</span>`;
+        console.error("天气获取失败", err);
+        // 失败时用默认城市兜底
+        weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>杭州·天气服务异常</span>`;
     }
 }
 
