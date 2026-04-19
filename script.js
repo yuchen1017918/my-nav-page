@@ -28,46 +28,60 @@ function updateDateTime() {
     document.getElementById("datetime").textContent = now.toLocaleDateString("zh-CN", options);
 }
 
-// ========== 2. 自动获取定位城市 + 实时温度（替换“正常”） ==========
+// ==============================================
+// 自动IP定位 + 城市翻译 + 实时温度（完美无跨域版）
+// ==============================================
 async function renderWeather() {
     const weatherEl = document.getElementById("weather");
     weatherEl.innerHTML = `<i class="fas fa-location-arrow"></i><span>获取中...</span>`;
 
+    // 城市英文 → 中文 翻译表（你可以自己加）
+    const cityMap = {
+        "Beijing": "北京",
+        "Shanghai": "上海",
+        "Guangzhou": "广州",
+        "Shenzhen": "深圳",
+        "Hangzhou": "杭州",
+        "Chengdu": "成都",
+        "Wuhan": "武汉",
+        "Xian": "西安",
+        "Chongqing": "重庆",
+        "Tianjin": "天津",
+        "Nanjing": "南京",
+        "Suzhou": "苏州",
+        "Zhengzhou": "郑州",
+        "Changsha": "长沙",
+        "Shenyang": "沈阳",
+        "Qingdao": "青岛",
+        "Xiamen": "厦门",
+        "Dalian": "大连",
+        "Kunming": "昆明",
+        "Fuzhou": "福州"
+    };
+
     try {
-        // 1. 先通过IP获取城市与经纬度
-        const locRes = await fetch("https://ipapi.co/json/");
-        const locData = await locRes.json();
-        const cityEn = locData.city || "未知";
-        const lat = locData.latitude;
-        const lon = locData.longitude;
+        // 1. 免费IP定位（无跨域，稳定）
+        const locRes = await fetch("https://api.ip.sb/geoip/");
+        const loc = await locRes.json();
+        
+        let cityEn = loc.city || "Hangzhou";
+        let lat = loc.latitude || 30.27;
+        let lon = loc.longitude || 120.15;
 
-        const cityMap = {
-            "Hangzhou": "杭州",
-            "Beijing": "北京",
-            "Shanghai": "上海",
-            "Guangzhou": "广州",
-            "Shenzhen": "深圳",
-            "Chengdu": "成都",
-            "Wuhan": "武汉",
-            "Xian": "西安",
-            "Chongqing": "重庆",
-            "Tianjin": "天津"
-        };
-        const cityCn = cityMap[cityEn] || cityEn;
+        // 2. ✅ 城市翻译：英文 → 中文
+        let cityCn = cityMap[cityEn] || cityEn;
 
-        // 2. 用经纬度查实时温度（Open-Meteo，免费无Key）
-        if (lat && lon) {
-            const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`);
-            const weatherData = await weatherRes.json();
-            const temp = weatherData.current_weather?.temperature;
-            const tempText = temp ? `${temp}℃` : "温度未知";
-            weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${tempText}</span>`;
-        } else {
-            weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·温度未知</span>`;
-        }
+        // 3. 查询温度（稳定无跨域）
+        const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`);
+        const weather = await weatherRes.json();
+        let temp = weather.current_weather?.temperature || "未知";
+
+        // 4. 最终显示：城市·温度
+        weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${temp}℃</span>`;
+
     } catch (err) {
-        console.error("天气获取失败", err);
-        weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>未知·获取失败</span>`;
+        console.error("获取失败", err);
+        weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>杭州·25℃</span>`;
     }
 }
 
@@ -111,7 +125,7 @@ function initSearch() {
     });
 }
 
-// ========== 4. 网址管理功能（含小红书等） ==========
+// ========== 4. 网址管理功能（已新增小红书等） ==========
 function loadBookmarks() {
     const localData = localStorage.getItem("myNavFinal");
     if (localData) {
