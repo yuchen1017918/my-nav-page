@@ -42,7 +42,6 @@ function renderWeather() {
                 "Shanghai": "上海",
                 "Guangzhou": "广州",
                 "Shenzhen": "深圳"
-                // 可以在这里补充更多城市
             };
             const cityEn = data.city || "未知";
             const cityCn = cityMap[cityEn] || cityEn;
@@ -59,7 +58,6 @@ function initSearch() {
     const searchBtn = document.getElementById("searchBtn");
     const engineBtns = document.querySelectorAll(".engine-btn");
 
-    // 搜索引擎切换
     engineBtns.forEach(btn => {
         btn.addEventListener("click", () => {
             engineBtns.forEach(b => b.classList.remove("active"));
@@ -68,7 +66,6 @@ function initSearch() {
         });
     });
 
-    // 搜索执行
     function doSearch() {
         const keyword = searchInput.value.trim();
         if (!keyword) return;
@@ -76,13 +73,13 @@ function initSearch() {
         let url;
         switch(currentEngine) {
             case "baidu":
-                url = `https://www.baidu.com/s?wd=${keyword}`;
+                url = `https://www.baidu.com/s?wd=${encodeURIComponent(keyword)}`;
                 break;
             case "google":
-                url = `https://www.google.com/search?q=${keyword}`;
+                url = `https://www.sogou.com/web?query=${encodeURIComponent(keyword)}`;
                 break;
             case "bing":
-                url = `https://www.bing.com/search?q=${keyword}`;
+                url = `https://cn.bing.com/search?q=${encodeURIComponent(keyword)}`;
                 break;
         }
         window.open(url, "_blank");
@@ -96,13 +93,11 @@ function initSearch() {
 }
 
 // ========== 4. 网址管理功能 ==========
-// 加载本地存储的网址（唯一版本，修复重复定义）
 function loadBookmarks() {
-    const localData = localStorage.getItem("customBookmarks");
+    const localData = localStorage.getItem("myNavFinal");
     if (localData) {
         bookmarks = JSON.parse(localData);
     } else {
-        // 所有网站都配置了专属图标+品牌色
         bookmarks = [
             { id: 1, name: "百度", url: "https://www.baidu.com", icon: "fa-search", color: "#409eff" },
             { id: 2, name: "淘宝", url: "https://www.taobao.com", icon: "fa-shopping-bag", color: "#ff5000" },
@@ -118,13 +113,19 @@ function loadBookmarks() {
             { id: 12, name: "百度百科", url: "https://baike.baidu.com/", icon: "fa-book-open", color: "#2980b9" },
             { id: 13, name: "百度图片", url: "https://image.baidu.com/", icon: "fa-image", color: "#27ae60" },
             { id: 14, name: "千问", url: "https://tongyi.aliyun.com/", icon: "fa-brain", color: "#ff7a45" },
-            { id: 15, name: "即梦", url: "https://jimeng.ai/", icon: "fa-palette", color: "#9c27b0" }
+            { id: 15, name: "即梦", url: "https://jimeng.jianying.com/ai-tool/home/", icon: "fa-palette", color: "#9c27b0" },
+            { id: 16, name: "GitHub", url: "https://github.com/", icon: "fa-github", color: "#171515" },
+            { id: 17, name: "凤凰网", url: "https://www.ifeng.com/", icon: "fa-globe", color: "#d32f2f" },
+            { id: 18, name: "央视网", url: "https://www.cctv.com/", icon: "fa-tv", color: "#c8102e" },
+            { id: 19, name: "微博", url: "https://weibo.com/", icon: "fa-weibo", color: "#e6162d" },
+            { id: 20, name: "腾讯新闻", url: "https://news.qq.com/", icon: "fa-newspaper", color: "#0052d9" },
+            { id: 21, name: "网易新闻", url: "https://www.163.com/", icon: "fa-newspaper", color: "#c80020" }
         ];
         saveBookmarksToLocal();
     }
     renderBookmarks();
 }
-// 渲染网址卡片
+
 function renderBookmarks() {
     const grid = document.getElementById("bookmarksGrid");
     grid.innerHTML = "";
@@ -134,47 +135,38 @@ function renderBookmarks() {
         card.href = item.url;
         card.target = "_blank";
         card.className = "bookmark-card";
-        card.setAttribute("role", "listitem");
-        // 动态设置图标背景色
         const bgColor = item.color || "#409eff";
         card.innerHTML = `
             <div class="card-actions">
                 <button class="edit-btn" data-id="${item.id}" aria-label="编辑网址">
-                    <i class="fas fa-edit" aria-hidden="true"></i>
+                    <i class="fas fa-edit"></i>
                 </button>
                 <button class="delete-btn" data-id="${item.id}" aria-label="删除网址">
-                    <i class="fas fa-trash" aria-hidden="true"></i>
+                    <i class="fas fa-trash"></i>
                 </button>
             </div>
             <div class="icon" style="background-color: ${bgColor}">
-                <i class="fas ${item.icon}" aria-hidden="true"></i>
+                <i class="fas ${item.icon}"></i>
             </div>
             <div class="name">${item.name}</div>
         `;
         grid.appendChild(card);
     });
-
     bindCardActions();
 }
 
-// 绑定卡片编辑删除
 function bindCardActions() {
     document.querySelectorAll(".card-actions button").forEach(btn => {
         btn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
             const id = parseInt(btn.dataset.id);
-            
-            if (btn.classList.contains("edit-btn")) {
-                openEditModal(id);
-            } else if (btn.classList.contains("delete-btn")) {
-                deleteBookmark(id);
-            }
+            if (btn.classList.contains("edit-btn")) openEditModal(id);
+            else if (btn.classList.contains("delete-btn")) deleteBookmark(id);
         });
     });
 }
 
-// 打开添加/编辑弹窗
 function openModal(isEdit = false, data = null) {
     const modalTitle = document.getElementById("modalTitle");
     const bookmarkForm = document.getElementById("bookmarkForm");
@@ -193,24 +185,12 @@ function openModal(isEdit = false, data = null) {
         document.getElementById("bookmarkIcon").value = "fa-globe";
         document.getElementById("bookmarkColor").value = "#409eff";
     }
-    
     modal.classList.add("show");
 }
 
-// 关闭弹窗
-function closeModal() {
-    modal.classList.remove("show");
-}
+function closeModal() { modal.classList.remove("show"); }
+function openEditModal(id) { const data = bookmarks.find(item => item.id === id); if (data) openModal(true, data); }
 
-// 打开编辑弹窗
-function openEditModal(id) {
-    const data = bookmarks.find(item => item.id === id);
-    if (data) {
-        openModal(true, data);
-    }
-}
-
-// 保存网址（新增/编辑）
 function saveBookmark(e) {
     e.preventDefault();
     const id = document.getElementById("bookmarkId").value;
@@ -218,28 +198,19 @@ function saveBookmark(e) {
     let url = document.getElementById("bookmarkUrl").value.trim();
     const icon = document.getElementById("bookmarkIcon").value;
     const color = document.getElementById("bookmarkColor").value;
-
     if (!url.startsWith("http")) url = "https://" + url;
 
     if (id) {
         const index = bookmarks.findIndex(item => item.id === parseInt(id));
         bookmarks[index] = { ...bookmarks[index], name, url, icon, color };
     } else {
-        bookmarks.push({
-            id: Date.now(),
-            name,
-            url,
-            icon: icon || "fa-globe",
-            color: color || "#409eff"
-        });
+        bookmarks.push({ id: Date.now(), name, url, icon: icon || "fa-globe", color: color || "#409eff" });
     }
-
     saveBookmarksToLocal();
     renderBookmarks();
     closeModal();
 }
 
-// 删除网址
 function deleteBookmark(id) {
     if (confirm("确定要删除这个网址吗？")) {
         bookmarks = bookmarks.filter(item => item.id !== id);
@@ -248,32 +219,26 @@ function deleteBookmark(id) {
     }
 }
 
-// 保存到本地存储
 function saveBookmarksToLocal() {
-    localStorage.setItem("customBookmarks", JSON.stringify(bookmarks));
+    localStorage.setItem("myNavFinal", JSON.stringify(bookmarks));
 }
 
 // ========== 5. 设置面板功能 ==========
-// 加载用户设置
 function loadSettings() {
-    // 主题设置
     const theme = localStorage.getItem("theme") || "light";
     document.body.className = theme === "dark" ? "dark" : "";
     document.querySelector(`.theme-btn[data-theme="${theme}"]`).classList.add("active");
 
-    // 字体大小
     const fontSize = localStorage.getItem("fontSize") || "16";
     document.documentElement.style.fontSize = `${fontSize}px`;
     document.querySelector(`.font-btn[data-size="${fontSize}"]`).classList.add("active");
 }
 
-// 切换主题
 function toggleTheme(theme) {
     document.body.className = theme === "dark" ? "dark" : "";
     localStorage.setItem("theme", theme);
 }
 
-// 调整字体大小
 function changeFontSize(size) {
     document.documentElement.style.fontSize = `${size}px`;
     localStorage.setItem("fontSize", size);
@@ -281,28 +246,18 @@ function changeFontSize(size) {
 
 // ========== 6. 事件监听 ==========
 function initEventListeners() {
-    // 搜索初始化
     initSearch();
-
-    // 添加网址按钮
     document.getElementById("addBookmarkBtn").addEventListener("click", () => openModal());
-
-    // 弹窗关闭
     document.getElementById("closeModal").addEventListener("click", closeModal);
     document.getElementById("cancelBtn").addEventListener("click", closeModal);
-
-    // 表单提交
     document.getElementById("bookmarkForm").addEventListener("submit", saveBookmark);
 
-    // 设置面板
     const settingBtn = document.getElementById("settingBtn");
     const closePanel = document.getElementById("closePanel");
     const settingsPanel = document.getElementById("settingsPanel");
-
     settingBtn.addEventListener("click", () => settingsPanel.classList.add("show"));
     closePanel.addEventListener("click", () => settingsPanel.classList.remove("show"));
 
-    // 主题切换
     document.querySelectorAll(".theme-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             document.querySelectorAll(".theme-btn").forEach(b => b.classList.remove("active"));
@@ -311,7 +266,6 @@ function initEventListeners() {
         });
     });
 
-    // 字体大小切换
     document.querySelectorAll(".font-btn").forEach(btn => {
         btn.addEventListener("click", () => {
             document.querySelectorAll(".font-btn").forEach(b => b.classList.remove("active"));
