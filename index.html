@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宇辰导航</title>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入样式文件 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 顶部信息区：日期、时间、天气 -->
+    <div class="info-bar">
+        <div class="datetime" id="datetime" aria-live="polite"></div>
+        <div class="weather" id="weather" aria-live="polite">
+            <i class="fas fa-sun" aria-hidden="true"></i>
+            <span>北京 · 晴天 25℃</span>
+        </div>
+    </div>
+
+    <!-- 搜索区域 -->
+    <div class="search-container">
+        <!-- 搜索引擎切换 -->
+        <div class="search-engine" role="group" aria-label="搜索引擎选择">
+            <button class="engine-btn active" data-engine="baidu" aria-pressed="true">百度</button>
+            <button class="engine-btn" data-engine="google" aria-pressed="false">谷歌</button>
+            <button class="engine-btn" data-engine="bing" aria-pressed="false">必应</button>
+        </div>
+        <!-- 搜索输入框 -->
+        <div class="search-box">
+            <label for="searchInput" class="sr-only">搜索关键词</label>
+            <input type="text" id="searchInput" placeholder="输入关键词搜索..." aria-label="搜索关键词">
+            <button id="searchBtn" aria-label="执行搜索">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 网址导航区域 -->
+    <div class="bookmarks-section">
+        <h2 class="section-title">常用网址</h2>
+        <div class="bookmarks-grid" id="bookmarksGrid" role="list" aria-label="常用网址列表">
+            <!-- 网址卡片通过JS动态渲染 -->
+        </div>
+        <!-- 添加网址按钮 -->
+        <button class="add-btn" id="addBookmarkBtn" aria-label="添加新网址">
+            <i class="fas fa-plus" aria-hidden="true"></i> 添加网址
+        </button>
+    </div>
+
+    <!-- 底部辅助区 -->
+    <div class="footer">
+        <button class="setting-btn" id="settingBtn" aria-label="打开设置面板">
+            <i class="fas fa-cog" aria-hidden="true"></i> 设置
+        </button>
+        <span>© 2025 宇辰导航</span>
+    </div>
+
+    <!-- 设置面板（默认隐藏） -->
+    <div class="settings-panel" id="settingsPanel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="panel-header">
+            <h3 id="settingsTitle">个性化设置</h3>
+            <button class="close-panel" id="closePanel" aria-label="关闭设置面板">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="panel-item">
+            <label>主题模式</label>
+            <div class="theme-btns" role="group" aria-label="主题模式选择">
+                <button class="theme-btn" data-theme="light">浅色</button>
+                <button class="theme-btn" data-theme="dark">深色</button>
+            </div>
+        </div>
+        <div class="panel-item">
+            <label>字体大小</label>
+            <div class="font-btns" role="group" aria-label="字体大小选择">
+                <button class="font-btn" data-size="14">小</button>
+                <button class="font-btn" data-size="16">中</button>
+                <button class="font-btn" data-size="18">大</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 网址编辑弹窗（默认隐藏） -->
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">添加网址</h3>
+                <button class="close-modal" id="closeModal" aria-label="关闭弹窗">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <form class="modal-form" id="bookmarkForm">
+                <input type="hidden" id="bookmarkId">
+                <div class="form-group">
+                    <label for="bookmarkName">网站名称</label>
+                    <input type="text" id="bookmarkName" placeholder="例如：百度" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="bookmarkUrl">网站链接</label>
+                    <input type="url" id="bookmarkUrl" placeholder="例如：https://www.baidu.com" required aria-required="true">
+                </div>
+
+                <!-- 新增：图标选择 -->
+                <div class="form-group">
+                    <label for="bookmarkIcon">图标样式</label>
+                    <select id="bookmarkIcon" class="form-control">
+                        <option value="fa-globe">🌍 默认</option>
+                        <option value="fa-search">🔍 搜索</option>
+                        <option value="fa-shopping-bag">🛍️ 购物</option>
+                        <option value="fa-play-circle">🎬 视频</option>
+                        <option value="fa-music">🎵 音乐</option>
+                        <option value="fa-code">💻 代码</option>
+                        <option value="fa-robot">🤖 AI</option>
+                        <option value="fa-comment-dots">💬 对话</option>
+                        <option value="fa-image">🖼️ 图片</option>
+                        <option value="fa-book">📖 阅读</option>
+                        <option value="fa-weixin">💬 微信</option>
+                        <option value="fa-brain">🧠 智能</option>
+                        <option value="fa-palette">🎨 设计</option>
+                    </select>
+                </div>
+
+                <!-- 新增：颜色选择 -->
+                <div class="form-group">
+                    <label for="bookmarkColor">图标背景色</label>
+                    <input type="color" id="bookmarkColor" value="#409eff" class="color-input">
+                </div>
+
+                <div class="modal-btns">
+                    <button type="button" class="cancel-btn" id="cancelBtn" aria-label="取消操作">取消</button>
+                    <button type="submit" class="confirm-btn" aria-label="确认操作">确认</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 引入脚本文件 -->
+    <script src="script.js"></script>
+</body>
+</html>
