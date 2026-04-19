@@ -28,28 +28,47 @@ function updateDateTime() {
     document.getElementById("datetime").textContent = now.toLocaleDateString("zh-CN", options);
 }
 
-// ========== 2. 自动获取定位城市（失败显示未知） ==========
-function renderWeather() {
+// ========== 2. 自动获取定位城市 + 实时温度（替换“正常”） ==========
+async function renderWeather() {
     const weatherEl = document.getElementById("weather");
     weatherEl.innerHTML = `<i class="fas fa-location-arrow"></i><span>获取中...</span>`;
 
-    fetch("https://ipapi.co/json/")
-        .then(res => res.json())
-        .then(data => {
-            const cityMap = {
-                "Hangzhou": "杭州",
-                "Beijing": "北京",
-                "Shanghai": "上海",
-                "Guangzhou": "广州",
-                "Shenzhen": "深圳"
-            };
-            const cityEn = data.city || "未知";
-            const cityCn = cityMap[cityEn] || cityEn;
-            weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn} · 正常</span>`;
-        })
-        .catch(() => {
-            weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>未知 · 未知</span>`;
-        });
+    try {
+        // 1. 先通过IP获取城市与经纬度
+        const locRes = await fetch("https://ipapi.co/json/");
+        const locData = await locRes.json();
+        const cityEn = locData.city || "未知";
+        const lat = locData.latitude;
+        const lon = locData.longitude;
+
+        const cityMap = {
+            "Hangzhou": "杭州",
+            "Beijing": "北京",
+            "Shanghai": "上海",
+            "Guangzhou": "广州",
+            "Shenzhen": "深圳",
+            "Chengdu": "成都",
+            "Wuhan": "武汉",
+            "Xian": "西安",
+            "Chongqing": "重庆",
+            "Tianjin": "天津"
+        };
+        const cityCn = cityMap[cityEn] || cityEn;
+
+        // 2. 用经纬度查实时温度（Open-Meteo，免费无Key）
+        if (lat && lon) {
+            const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`);
+            const weatherData = await weatherRes.json();
+            const temp = weatherData.current_weather?.temperature;
+            const tempText = temp ? `${temp}℃` : "温度未知";
+            weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${tempText}</span>`;
+        } else {
+            weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·温度未知</span>`;
+        }
+    } catch (err) {
+        console.error("天气获取失败", err);
+        weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>未知·获取失败</span>`;
+    }
 }
 
 // ========== 3. 搜索功能 ==========
@@ -92,7 +111,7 @@ function initSearch() {
     });
 }
 
-// ========== 4. 网址管理功能 ==========
+// ========== 4. 网址管理功能（含小红书等） ==========
 function loadBookmarks() {
     const localData = localStorage.getItem("myNavFinal");
     if (localData) {
@@ -119,7 +138,11 @@ function loadBookmarks() {
             { id: 18, name: "央视网", url: "https://www.cctv.com/", icon: "fa-tv", color: "#c8102e" },
             { id: 19, name: "微博", url: "https://weibo.com/", icon: "fa-weibo", color: "#e6162d" },
             { id: 20, name: "腾讯新闻", url: "https://news.qq.com/", icon: "fa-newspaper", color: "#0052d9" },
-            { id: 21, name: "网易新闻", url: "https://www.163.com/", icon: "fa-newspaper", color: "#c80020" }
+            { id: 21, name: "网易新闻", url: "https://www.163.com/", icon: "fa-newspaper", color: "#c80020" },
+            // --- 新增网站 ---
+            { id: 22, name: "小红书", url: "https://www.xiaohongshu.com/", icon: "fa-heart", color: "#fe2c55" },
+            { id: 23, name: "豆瓣", url: "https://www.douban.com/", icon: "fa-star", color: "#007722" },
+            { id: 24, name: "知乎日报", url: "https://daily.zhihu.com/", icon: "fa-newspaper", color: "#0084ff" }
         ];
         saveBookmarksToLocal();
     }
