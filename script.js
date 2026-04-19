@@ -113,7 +113,7 @@ function initSearch() {
     });
 }
 
-// ========== 4. 网址管理功能（已新增小红书等） ==========
+// ========== 4. 网址管理功能 ==========
 function loadBookmarks() {
     const localData = localStorage.getItem("myNavFinal");
     if (localData) {
@@ -141,10 +141,10 @@ function loadBookmarks() {
             { id: 19, name: "微博", url: "https://weibo.com/", icon: "fa-weibo", color: "#e6162d" },
             { id: 20, name: "腾讯新闻", url: "https://news.qq.com/", icon: "fa-newspaper", color: "#0052d9" },
             { id: 21, name: "网易新闻", url: "https://www.163.com/", icon: "fa-newspaper", color: "#c80020" },
-            // --- 新增网站 ---
             { id: 22, name: "小红书", url: "https://www.xiaohongshu.com/", icon: "fa-heart", color: "#fe2c55" },
             { id: 23, name: "豆瓣", url: "https://www.douban.com/", icon: "fa-star", color: "#007722" },
-            { id: 24, name: "知乎日报", url: "https://daily.zhihu.com/", icon: "fa-newspaper", color: "#0084ff" }
+            { id: 24, name: "知乎日报", url: "https://daily.zhihu.com/", icon: "fa-newspaper", color: "#0084ff" },
+            { id: 25, name: "DeepSeek", url: "https://www.deepseek.com/", icon: "fa-brain", color: "#165DFF" }
         ];
         saveBookmarksToLocal();
     }
