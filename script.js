@@ -133,7 +133,7 @@ function loadBookmarks() {
       { id: 19, name: '豆瓣', url: 'https://www.douban.com/', icon: 'fa-star', color: '#007722' },
       { id: 20, name: 'DeepSeek', url: 'https://www.deepseek.com/', icon: 'fa-brain', color: '#165DFF' },
       { id: 21, name: 'Kimi', url: 'https://kimi.moonshot.cn/', icon: 'fa-comment-alt', color: '#36BFFA' },
-      { id: 22, name: '班级圈', url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-alt', color: '#36BFFA' }
+      { id: 22, name: '班级圈', url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-dots', color: '#36BFFA' }
     ];
     saveBookmarksToLocal();
   }
