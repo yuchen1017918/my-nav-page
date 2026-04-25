@@ -132,7 +132,8 @@ function loadBookmarks() {
       { id: 18, name: '小红书', url: 'https://www.xiaohongshu.com/', icon: 'fa-heart', color: '#fe2c55' },
       { id: 19, name: '豆瓣', url: 'https://www.douban.com/', icon: 'fa-star', color: '#007722' },
       { id: 20, name: 'DeepSeek', url: 'https://www.deepseek.com/', icon: 'fa-brain', color: '#165DFF' },
-      { id: 21, name: 'Kimi', url: 'https://kimi.moonshot.cn/', icon: 'fa-comment-alt', color: '#36BFFA' }
+      { id: 21, name: 'Kimi', url: 'https://kimi.moonshot.cn/', icon: 'fa-comment-alt', color: '#36BFFA' },
+      { id: 22, name: '班级圈', url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-alt', color: '#36BFFA' }
     ];
     saveBookmarksToLocal();
   }
