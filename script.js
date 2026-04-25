@@ -44,6 +44,7 @@ async function renderWeather() {
   };
 
   try {
+    // 1. 获取IP定位
     const locRes = await fetch('https://api.ip.sb/geoip/');
     const loc = await locRes.json();
     const cityEn = loc.city || 'Hangzhou';
@@ -51,6 +52,7 @@ async function renderWeather() {
     const lon = loc.longitude || 120.15;
     const cityCn = cityMap[cityEn] || cityEn;
 
+    // 2. 获取天气（用Open-Meteo无跨域接口）
     const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`);
     const weather = await weatherRes.json();
     const temp = weather.current_weather?.temperature || '未知';
@@ -58,7 +60,8 @@ async function renderWeather() {
     weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${temp}℃</span>`;
   } catch (err) {
     console.error('天气获取失败', err);
-    weatherEl.innerHTML = '<i class="fas fa-map-marker-alt"></i><span>杭州·天气服务异常</span>';
+    // 异常时用本地IP城市兜底
+    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn || '未知城市'}·天气服务异常</span>`;
   }
 }
 
