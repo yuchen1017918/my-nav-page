@@ -37,11 +37,32 @@ async function renderWeather() {
   const weatherEl = document.getElementById('weather');
   weatherEl.innerHTML = '<i class="fas fa-location-arrow"></i><span>获取中...</span>';
 
+  // 1. 中英城市翻译本（完整版）
   const cityMap = {
     Beijing: '北京', Shanghai: '上海', Guangzhou: '广州', Shenzhen: '深圳',
     Hangzhou: '杭州', Chengdu: '成都', Wuhan: '武汉', Xian: '西安',
-    Chongqing: '重庆', Tianjin: '天津'
+    Chongqing: '重庆', Tianjin: '天津', Nanjing: '南京', Changsha: '长沙',
+    Zhengzhou: '郑州', Jinan: '济南', Haikou: '海口', Guiyang: '贵阳',
+    Kunming: '昆明', Lanzhou: '兰州', Xining: '西宁', Yinchuan: '银川',
+    Hohhot: '呼和浩特', Urumqi: '乌鲁木齐', Lhasa: '拉萨', Nanning: '南宁',
+    Changchun: '长春', Harbin: '哈尔滨', Shenyang: '沈阳', Taiyuan: '太原',
+    Shijiazhuang: '石家庄', Hefei: '合肥', Fuzhou: '福州', Nanchang: '南昌',
+    Suzhou: '苏州', Wuxi: '无锡', Ningbo: '宁波', Wenzhou: '温州',
+    Xiamen: '厦门', Quanzhou: '泉州', Qingdao: '青岛', Yantai: '烟台',
+    Dalian: '大连', Dongguan: '东莞', Foshan: '佛山', Zhongshan: '中山',
+    Zhuhai: '珠海', Huizhou: '惠州', Sanya: '三亚', Lijiang: '丽江',
+    Dali: '大理', Zhangjiajie: '张家界', Huangshan: '黄山', Guilin: '桂林'
   };
+
+  // 天气状态翻译本（数字→中文天气）
+  const weatherCodeMap = {
+    0: '晴天', 1: '多云', 2: '多云', 3: '阴天',
+    45: '雾', 48: '雾', 51: '小雨', 53: '小雨', 55: '中雨',
+    61: '小雨', 63: '中雨', 65: '大雨', 71: '小雪', 73: '中雪', 75: '大雪',
+    80: '阵雨', 81: '阵雨', 95: '雷阵雨'
+  };
+
+  let cityCn = '未知城市';
 
   try {
     // 1. 获取IP定位
@@ -50,18 +71,25 @@ async function renderWeather() {
     const cityEn = loc.city || 'Hangzhou';
     const lat = loc.latitude || 30.27;
     const lon = loc.longitude || 120.15;
-    const cityCn = cityMap[cityEn] || cityEn;
+    cityCn = cityMap[cityEn] || cityEn;
 
-    // 2. 获取天气（用Open-Meteo无跨域接口）
+    // 2. 查询天气
     const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`);
     const weather = await weatherRes.json();
-    const temp = weather.current_weather?.temperature || '未知';
+    const temp = weather.current_weather?.temperature;
+    // 提取天气码→翻译成中文天气
+    const weatherCode = weather.current_weather?.weathercode;
+    const weatherText = weatherCodeMap[weatherCode] || '天气未知';
 
-    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${temp}℃</span>`;
+    if (temp !== undefined) {
+      // 拼接「城市·温度·天气」
+      weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${temp}℃·${weatherText}</span>`;
+    } else {
+      throw new Error('温度数据缺失');
+    }
   } catch (err) {
     console.error('天气获取失败', err);
-    // 异常时用本地IP城市兜底
-    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn || '未知城市'}·天气服务异常</span>`;
+    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·天气服务异常</span>`;
   }
 }
 
@@ -115,28 +143,37 @@ function loadBookmarks() {
     bookmarks = JSON.parse(localData);
   } else {
     bookmarks = [
-      { id: 1, name: '百度', url: 'https://www.baidu.com', icon: 'fa-search', color: '#409eff' },
-      { id: 2, name: '淘宝', url: 'https://www.taobao.com', icon: 'fa-shopping-bag', color: '#ff5000' },
-      { id: 3, name: '抖音', url: 'https://www.douyin.com', icon: 'fa-music', color: '#000000' },
-      { id: 4, name: '知乎', url: 'https://www.zhihu.com', icon: 'fa-book', color: '#0084ff' },
-      { id: 5, name: 'B站', url: 'https://www.bilibili.com', icon: 'fa-play-circle', color: '#fb7299' },
-      { id: 6, name: '微信', url: 'https://weixin.qq.com/', icon: 'fa-weixin', color: '#07c160' },
-      { id: 7, name: '古德微', url: 'http://gdwrobot.com', icon: 'fa-robot', color: '#2196f3' },
-      { id: 8, name: '豆包', url: 'https://www.doubao.com/', icon: 'fa-robot', color: '#1677ff' },
-      { id: 9, name: '洛谷', url: 'https://www.luogu.com.cn/', icon: 'fa-code', color: '#3498db' },
-      { id: 10, name: '元宝', url: 'https://yuanbao.tencent.com/', icon: 'fa-coins', color: '#ffc107' },
-      { id: 11, name: '千问', url: 'https://tongyi.aliyun.com/', icon: 'fa-brain', color: '#ff7a45' },
-      { id: 12, name: '即梦', url: 'https://jimeng.jianying.com/ai-tool/home/', icon: 'fa-palette', color: '#9c27b0' },
-      { id: 13, name: 'GitHub', url: 'https://github.com/', icon: 'fa-github', color: '#171515' },
-      { id: 14, name: '凤凰网', url: 'https://www.ifeng.com/', icon: 'fa-globe', color: '#d32f2f' },
-      { id: 15, name: '央视网', url: 'https://www.cctv.com/', icon: 'fa-tv', color: '#c8102e' },
-      { id: 16, name: '微博', url: 'https://weibo.com/', icon: 'fa-weibo', color: '#e6162d' },
-      { id: 17, name: '腾讯新闻', url: 'https://news.qq.com/', icon: 'fa-newspaper', color: '#0052d9' },
-      { id: 18, name: '小红书', url: 'https://www.xiaohongshu.com/', icon: 'fa-heart', color: '#fe2c55' },
-      { id: 19, name: '豆瓣', url: 'https://www.douban.com/', icon: 'fa-star', color: '#007722' },
-      { id: 20, name: 'DeepSeek', url: 'https://www.deepseek.com/', icon: 'fa-brain', color: '#165DFF' },
-      { id: 21, name: 'Kimi', url: 'https://kimi.moonshot.cn/', icon: 'fa-comment-alt', color: '#36BFFA' },
-      { id: 22, name: '班级圈', url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-dots', color: '#36BFFA' }
+        // AI智能工具（集中归类）
+        { id: 7,  name: '古德微',   url: 'http://gdwrobot.com',                      icon: 'fa-robot',       color: '#2196f3' },
+        { id: 8,  name: '豆包',     url: 'https://www.doubao.com/',                  icon: 'fa-robot',       color: '#1677ff' },
+        { id: 10, name: '元宝',     url: 'https://yuanbao.tencent.com/',             icon: 'fa-coins',       color: '#ffc107' },
+        { id: 11, name: '千问',     url: 'https://tongyi.aliyun.com/',               icon: 'fa-brain',       color: '#ff7a45' },
+        { id: 12, name: '即梦',     url: 'https://jimeng.jianying.com/ai-tool/home/',icon: 'fa-palette',     color: '#9c27b0' },
+        { id: 20, name: 'DeepSeek', url: 'https://www.deepseek.com/',                icon: 'fa-brain',       color: '#165DFF' },
+        { id: 21, name: 'Kimi',     url: 'https://kimi.moonshot.cn/',                icon: 'fa-comment-alt', color: '#36BFFA' },
+
+        // 常用生活娱乐
+        { id: 1,  name: '百度',     url: 'https://www.baidu.com',                    icon: 'fa-search',      color: '#409eff' },
+        { id: 2,  name: '淘宝',     url: 'https://www.taobao.com',                   icon: 'fa-shopping-bag',color: '#ff5000' },
+        { id: 3,  name: '抖音',     url: 'https://www.douyin.com',                   icon: 'fa-music',       color: '#000000' },
+        { id: 4,  name: '知乎',     url: 'https://www.zhihu.com',                    icon: 'fa-book',        color: '#0084ff' },
+        { id: 5,  name: 'B站',      url: 'https://www.bilibili.com',                 icon: 'fa-play-circle', color: '#fb7299' },
+        { id: 6,  name: '微信',     url: 'https://weixin.qq.com/',                   icon: 'fa-weixin',      color: '#07c160' },
+        { id: 7,  name: '豆瓣',     url: 'https://www.douban.com/',                  icon: 'fa-star',        color: '#007722' },
+        { id: 8,  name: '小红书',   url: 'https://www.xiaohongshu.com/',             icon: 'fa-heart',       color: '#fe2c55' },
+
+        // 资讯新闻平台
+        { id: 9,  name: '凤凰网',   url: 'https://www.ifeng.com/',                   icon: 'fa-globe',       color: '#d32f2f' },
+        { id: 10, name: '央视网',   url: 'https://www.cctv.com/',                    icon: 'fa-tv',          color: '#c8102e' },
+        { id: 11, name: '微博',     url: 'https://weibo.com/',                       icon: 'fa-weibo',       color: '#e6162d' },
+        { id: 12, name: '腾讯新闻', url: 'https://news.qq.com/',                     icon: 'fa-newspaper',   color: '#0052d9' },
+
+        // 编程学习工具
+        { id: 13, name: '洛谷',     url: 'https://www.luogu.com.cn/',                icon: 'fa-code',        color: '#3498db' },
+        { id: 14, name: 'GitHub',   url: 'https://github.com/',                      icon: 'fa-github',      color: '#171515' },
+
+        // 自定义工具
+        { id: 15, name: '班级圈',   url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-dots', color: '#36BFFA' }
     ];
     saveBookmarksToLocal();
   }
