@@ -47,6 +47,7 @@ Font Awesome 图标库
 支持深色模式一键切换
 🔄 自动维护
 本项目已配置 Dependabot，自动检查依赖安全更新，保持项目稳定安全。
+![导航页预览](https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/preview.png)
 📄 许可证
 MIT License - 自由使用、修改、分享
 © 2025 宇辰导航
