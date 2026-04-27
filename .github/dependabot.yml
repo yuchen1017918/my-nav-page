@@ -1,22 +1,23 @@
 version: 2
+
 updates:
-  # 针对 npm 依赖的更新配置
+  # NPM 依赖自动更新
   - package-ecosystem: "npm"
-    directory: "/"  # 你的 package.json 所在目录，根目录就是 /
+    directory: "/"
     schedule:
-      interval: "weekly"  # 每周检查一次更新
-      day: "monday"       # 周一跑，不影响周末开发
-      time: "09:00"      # 早上9点，方便你上班时处理
-    open-pull-requests-limit: 5  # 每次最多开5个PR，避免刷屏
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
     reviewers:
-      - yuchen1017918  # 填你的GitHub用户名，自动分配你为PR审核人
+      - yuchen1017918
     labels:
       - "dependencies"
       - "dependabot"
     commit-message:
-      prefix: "chore"  # 提交信息前缀，比如 chore: update xxx to v1.2.3
+      prefix: "chore"
 
-  # 针对 GitHub Actions 工作流的更新（可选但推荐）
+  # GitHub Actions 自动更新
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
