@@ -1,0 +1,6 @@
+# 允许所有搜索引擎抓取
+User-agent: *
+Allow: /
+
+# 告诉爬虫「宇辰导航」站点地图地址
+Sitemap: https://yuchen1017918.github.io/my-nav-page/sitemap.xml
