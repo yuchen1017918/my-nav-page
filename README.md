@@ -24,10 +24,16 @@
 ```plaintext  
 plaintext  
 yuchen-nav/  
-├── index.html      # 主页面结构  
-├── style.css       # 样式文件（含深浅色主题）  
-├── script.js       # 核心交互逻辑  
-└── README.md       # 项目说明文档  
+├── .github/           # Git仓库配置文件夹  
+|    └── dependabot.yml# Dependabot配置  
+├── index.html         # 主页面结构  
+├── style.css          # 样式文件 
+├── script.js          # 核心交互逻辑  
+├── favicon.ico        # 网页图标  
+├── preview.png        # 网页预览图  
+├── QR_code.png        # 网页二维码  
+├── sitemap.xml        # 网站地图  
+└── README.md          # 项目说明文档  
 ```
 
 ## 🎯 使用说明  
