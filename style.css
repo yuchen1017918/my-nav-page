@@ -7,24 +7,24 @@
   transition: color 0.3s, background-color 0.3s, border-color 0.3s;
 }
 
-/* 浅色主题变量 */
+/* 浅色主题 */
 :root {
   --bg: #f5f7fa;
   --text: #333;
   --card: #fff;
-  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --search: #fff;
   --border: #e1e5e9;
   --primary: #409eff;
   --primary-hover: #66b1ff;
 }
 
-/* 深色主题变量 */
+/* 深色主题 */
 body.dark {
   --bg: #1a1a1a;
   --text: #e5e5e5;
   --card: #2a2a2a;
-  --shadow: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   --search: #2a2a2a;
   --border: #444;
 }
@@ -39,7 +39,7 @@ body {
   align-items: center;
 }
 
-/* 顶部信息栏 */
+/* 信息栏 */
 .info-bar {
   width: 100%;
   max-width: 1000px;
@@ -49,32 +49,37 @@ body {
   margin-bottom: 40px;
   padding: 10px 20px;
 }
+
 .datetime {
   font-size: 18px;
   font-weight: 500;
 }
+
 .weather {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 16px;
 }
+
 .weather i {
   color: #ffb03b;
 }
 
-/* 搜索区域 */
+/* 搜索 */
 .search-container {
   width: 100%;
   max-width: 700px;
   margin-bottom: 50px;
 }
+
 .search-engine {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
 }
+
 .engine-btn {
   padding: 8px 16px;
   border: none;
@@ -84,14 +89,17 @@ body {
   cursor: pointer;
   font-size: 14px;
 }
+
 .engine-btn.active {
   background: var(--primary);
   color: #fff;
 }
+
 .engine-btn:hover {
   background: var(--primary-hover);
   color: #fff;
 }
+
 .search-box {
   display: flex;
   align-items: center;
@@ -101,6 +109,7 @@ body {
   padding: 12px 20px;
   box-shadow: var(--shadow);
 }
+
 .search-box input {
   flex: 1;
   border: none;
@@ -110,6 +119,7 @@ body {
   font-size: 16px;
   padding: 0 10px;
 }
+
 .search-box button {
   background: none;
   border: none;
@@ -118,17 +128,19 @@ body {
   cursor: pointer;
 }
 
-/* 网址导航 */
+/* 导航区域 */
 .bookmarks-section {
   width: 100%;
   max-width: 1000px;
 }
+
 .section-title {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
   text-align: center;
 }
+
 .bookmarks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -136,7 +148,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* 网址卡片 */
+/* 卡片 */
 .bookmark-card {
   background: var(--card);
   border-radius: 12px;
@@ -151,10 +163,12 @@ body {
   text-decoration: none;
   color: var(--text);
 }
+
 .bookmark-card:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
 .bookmark-card .icon {
   width: 50px;
   height: 50px;
@@ -166,12 +180,13 @@ body {
   color: white;
   font-size: 22px;
 }
+
 .bookmark-card .name {
   font-size: 14px;
   text-align: center;
 }
 
-/* 卡片操作按钮 */
+/* 卡片操作 */
 .card-actions {
   position: absolute;
   top: 5px;
@@ -179,19 +194,22 @@ body {
   display: none;
   gap: 5px;
 }
+
 .bookmark-card:hover .card-actions {
   display: flex;
 }
+
 .card-actions button {
   width: 24px;
   height: 24px;
   border-radius: 50%;
   border: none;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   color: white;
   cursor: pointer;
   font-size: 12px;
 }
+
 .edit-btn:hover { background: #409eff; }
 .delete-btn:hover { background: #f56c6c; }
 
@@ -210,6 +228,7 @@ body {
   font-size: 16px;
   cursor: pointer;
 }
+
 .add-btn:hover {
   background: var(--primary-hover);
 }
@@ -226,6 +245,7 @@ body {
   font-size: 14px;
   color: #999;
 }
+
 .setting-btn {
   background: none;
   border: none;
@@ -233,6 +253,7 @@ body {
   font-size: 18px;
   cursor: pointer;
 }
+
 .setting-btn:hover {
   color: var(--primary);
 }
@@ -245,20 +266,23 @@ body {
   width: 350px;
   height: 100vh;
   background: var(--card);
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   z-index: 100;
   transition: right 0.3s;
 }
+
 .settings-panel.show {
   right: 0;
 }
+
 .panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
 }
+
 .close-panel {
   background: none;
   border: none;
@@ -266,18 +290,22 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
+
 .panel-item {
   margin-bottom: 25px;
 }
+
 .panel-item label {
   display: block;
   margin-bottom: 15px;
   font-weight: 500;
 }
+
 .theme-btns, .font-btns {
   display: flex;
   gap: 10px;
 }
+
 .theme-btn, .font-btn {
   padding: 8px 16px;
   border: 1px solid var(--border);
@@ -286,6 +314,7 @@ body {
   color: var(--text);
   cursor: pointer;
 }
+
 .theme-btn:hover, .font-btn:hover {
   border-color: var(--primary);
   color: var(--primary);
@@ -298,7 +327,7 @@ body {
   left: 0;
   width: 100%;
   height: 100vh;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,10 +336,12 @@ body {
   visibility: hidden;
   transition: all 0.3s;
 }
+
 .modal.show {
   opacity: 1;
   visibility: visible;
 }
+
 .modal-content {
   background: var(--card);
   border-radius: 12px;
@@ -320,15 +351,18 @@ body {
   transform: translateY(-20px);
   transition: transform 0.3s;
 }
+
 .modal.show .modal-content {
   transform: translateY(0);
 }
+
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
+
 .close-modal {
   background: none;
   border: none;
@@ -336,14 +370,17 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
+
 .form-group {
   margin-bottom: 20px;
 }
+
 .form-group label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
 }
+
 .form-group input,
 .form-group select {
   width: 100%;
@@ -354,26 +391,31 @@ body {
   color: var(--text);
   outline: none;
 }
+
 .modal-btns {
   display: flex;
   justify-content: flex-end;
   gap: 15px;
   margin-top: 30px;
 }
+
 .cancel-btn, .confirm-btn {
   padding: 10px 20px;
   border-radius: 6px;
   cursor: pointer;
   border: none;
 }
+
 .cancel-btn {
   background: var(--card);
   color: var(--text);
 }
+
 .confirm-btn {
   background: var(--primary);
   color: white;
 }
+
 .cancel-btn:hover { background: #e1e5e9; }
 .confirm-btn:hover { background: var(--primary-hover); }
 

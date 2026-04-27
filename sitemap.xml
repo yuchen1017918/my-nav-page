@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- 宇辰导航核心页面（唯一页面） -->
   <url>
-    <!-- 你的导航页完整地址，和之前提交的保持一致 -->
     <loc>https://yuchen1017918.github.io/my-nav-page/</loc>
-    <!-- 页面更新频率（静态页面设为monthly即可） -->
     <changefreq>monthly</changefreq>
-    <!-- 页面优先级（核心页设为1.0） -->
     <priority>1.0</priority>
-    <!-- 最后更新时间（填你最近修改代码的日期，格式：YYYY-MM-DD） -->
     <lastmod>2026-04-27</lastmod>
   </url>
 </urlset>

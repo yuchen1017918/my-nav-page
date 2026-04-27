@@ -33,6 +33,7 @@ my-nav-page/
 ├── preview.png        # 网页预览图  
 ├── QR_code.png        # 网页二维码  
 ├── sitemap.xml        # 网站地图  
+├── robots.txt         # 网站爬虫爬取规则
 └── README.md          # 项目说明文档  
 ```
 
