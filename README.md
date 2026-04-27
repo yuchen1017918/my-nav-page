@@ -58,7 +58,12 @@ yuchen-nav/
 底部：版权信息 + 设置入口  
 支持深色模式无缝切换  
 
-![导航页预览](https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/preview.png)
+![导航页预览](https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/preview.png)  
+
+## 📱 在线预览二维码  
+扫描下方二维码，快速访问宇辰导航：  
+
+![宇辰导航二维码](https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/QR_code.png)  
 
 ## 🔄 自动维护  
 本项目已配置 Dependabot，自动检查依赖安全更新，保持项目稳定安全。  
