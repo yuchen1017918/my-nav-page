@@ -3,13 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>宇辰导航</title>
+  <!-- SEO核心标题（含核心关键词，搜索排名权重最高） -->
+  <title>宇辰导航 - 简洁个人导航页 | 自定义网址 多引擎搜索 深色模式</title>
+  <!-- SEO页面描述（搜索结果展示，含关键词+功能亮点，吸引点击） -->
+  <meta name="description" content="宇辰导航是免费简洁的个人自定义导航主页，支持多引擎搜索、添加常用网址、深色模式切换、实时时间天气，纯前端开箱即用，适配电脑手机全设备。">
+  <!-- SEO关键词（核心+长尾，精准匹配搜索） -->
+  <meta name="keywords" content="宇辰导航,个人导航页,简洁导航网站,自定义导航,免费导航主页,多引擎搜索,深色模式导航,常用网址导航">
+  <!-- 基础SEO配置（允许搜索引擎抓取） -->
+  <meta name="robots" content="index,follow">
+  <meta name="author" content="宇辰导航">
+  <meta name="copyright" content="©2025 宇辰导航 保留所有权利">
+  <!-- 移动端&浏览器兼容 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+
+  <!-- 社交分享优化（微信/微博分享展示更美观） -->
+  <meta property="og:title" content="宇辰导航 - 简洁个人导航页 | 自定义网址 多引擎搜索">
+  <meta property="og:description" content="免费简洁的个人自定义导航主页，支持多引擎搜索、添加常用网址、深色模式，全设备适配。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yuchen1017918.github.io/my-nav-page/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/preview.png">
+  <meta property="og:site_name" content="宇辰导航">
+
+  <!-- Twitter Card优化 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="宇辰导航 - 简洁个人导航页">
+  <meta name="twitter:description" content="免费自定义导航主页，多引擎搜索、深色模式、实时天气，开箱即用。">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/preview.png">
+
+  <!-- 结构化数据（提升搜索结果展示效果） -->
+  <script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "宇辰导航 - 简洁个人导航页",
+      "description": "免费简洁的个人自定义导航主页，支持多引擎搜索、添加常用网址、深色模式切换",
+      "url": "https://yuchen1017918.github.io/my-nav-page/",
+      "keywords": ["宇辰导航","个人导航页","自定义导航","多引擎搜索"],
+      "publisher": {
+          "@type": "Organization",
+          "name": "宇辰导航"
+      }
+  }
+  </script>
+
   <!-- 图标库 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- 样式 -->
   <link rel="stylesheet" href="style.css">
+  <!-- 隐藏样式（不影响界面，专供SEO） -->
+  <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}</style>
 </head>
 <body>
+  <!-- SEO核心H1标题（仅供搜索引擎抓，界面不显示） -->
+  <h1 class="sr-only">宇辰导航 - 简洁美观的个人自定义导航主页</h1>
+
   <!-- 顶部信息：时间 + 天气 -->
   <div class="info-bar">
     <div class="datetime" id="datetime" aria-live="polite"></div>
@@ -37,7 +85,8 @@
 
   <!-- 网址导航 -->
   <div class="bookmarks-section">
-    <h2 class="section-title">常用网址</h2>
+    <!-- SEO二级标题（含关键词） -->
+    <h2 class="section-title">常用网址导航 - 宇辰自定义导航</h2>
     <div class="bookmarks-grid" id="bookmarksGrid" role="list"></div>
     <button class="add-btn" id="addBookmarkBtn">
       <i class="fas fa-plus"></i> 添加网址
@@ -49,13 +98,13 @@
     <button class="setting-btn" id="settingBtn" aria-label="设置">
       <i class="fas fa-cog"></i>
     </button>
-    <span>© 2025 宇辰导航</span>
+    <span>© 2025 宇辰导航 - 简洁个人导航页</span>
   </div>
 
   <!-- 设置面板 -->
   <div class="settings-panel" id="settingsPanel">
     <div class="panel-header">
-      <h3>个性化设置</h3>
+      <h3>个性化设置 - 宇辰导航</h3>
       <button class="close-panel" id="closePanel">
         <i class="fas fa-times"></i>
       </button>
@@ -81,7 +130,7 @@
   <div class="modal" id="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 id="modalTitle">添加网址</h3>
+        <h3 id="modalTitle">添加网址 - 宇辰导航</h3>
         <button class="close-modal" id="closeModal">
           <i class="fas fa-times"></i>
         </button>
