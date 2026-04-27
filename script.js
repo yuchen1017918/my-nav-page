@@ -171,9 +171,10 @@ function loadBookmarks() {
         // 编程学习工具
         { id: 13, name: '洛谷',     url: 'https://www.luogu.com.cn/',                icon: 'fa-code',        color: '#3498db' },
         { id: 14, name: 'GitHub',   url: 'https://github.com/',                      icon: 'fa-github',      color: '#171515' },
+        { id: 14, name: '码上游',   url: 'https://ma3you.com/',                      icon: 'fa-image',      color: '#409eff' },
 
         // 自定义工具
-        { id: 15, name: '班级圈',   url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-dots', color: '#36BFFA' }
+        { id: 16, name: '班级圈',   url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-dots', color: '#36BFFA' }
     ];
     saveBookmarksToLocal();
   }
