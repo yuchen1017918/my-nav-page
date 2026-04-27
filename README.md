@@ -23,7 +23,7 @@
 ## 📂 项目结构  
 ```plaintext  
 plaintext  
-yuchen-nav/  
+my-nav-page/  
 ├── .github/           # Git仓库配置文件夹  
 |    └── dependabot.yml# Dependabot配置  
 ├── index.html         # 主页面结构  
