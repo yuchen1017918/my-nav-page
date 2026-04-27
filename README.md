@@ -61,9 +61,10 @@ yuchen-nav/
 ![导航页预览](https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/preview.png)  
 
 ## 📱 在线预览二维码  
-扫描下方二维码（请使用微信或其他二维码自动补全算法强的APP，此二维码是活码，跳转时可能出现网页未备案，请忽略），快速访问宇辰导航：  
+扫描下方二维码，快速访问宇辰导航：  
 
 ![宇辰导航二维码](https://raw.githubusercontent.com/yuchen1017918/my-nav-page/main/QR_code.png)  
+- 请使用微信或其他二维码自动补全算法强的APP，此二维码是活码，跳转时可能出现网页未备案，请忽略
 
 ## 🔄 自动维护  
 本项目已配置 Dependabot，自动检查依赖安全更新，保持项目稳定安全。  
