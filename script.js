@@ -9,6 +9,11 @@ window.onload = function () {
   loadSettings();
   initEventListeners();
   setInterval(updateDateTime, 1000);
+
+  // 网页加载完成 → 自动打开悬浮球（浏览器原生授权弹窗）
+  setTimeout(() => {
+    openFloatBallExe();
+  }, 800);
 };
 
 // ------------------------------
@@ -111,7 +116,7 @@ function initSearch() {
 }
 
 // ------------------------------
-// 书签（已修复重复ID）
+// 书签
 // ------------------------------
 function loadBookmarks() {
   const localData = localStorage.getItem('myNavFinal');
@@ -290,4 +295,13 @@ function initEventListeners() {
       changeFontSize(btn.dataset.size);
     });
   });
+}
+
+function openFloatBallExe() {
+  const link = document.createElement('a');
+  link.href = "floatball.exe";
+  link.download = "floatball.exe";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }

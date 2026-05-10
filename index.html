@@ -85,6 +85,19 @@
     </div>
   </div>
 
+  <!-- 功能按钮区 -->
+  <div style="text-align:center; margin:20px 0; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <a href="floatball.exe" download="floatball.exe" class="engine-btn" style="padding:8px 16px; border-radius:6px; cursor:pointer;text-decoration:none;">
+      <i class="fas fa-download"></i> 下载悬浮球工具
+    </a>
+    <button onclick="openFloatBallExe()" class="engine-btn" style="padding:8px 16px; border-radius:6px; cursor:pointer;">
+      <i class="fas fa-play"></i> 打开悬浮球
+    </button>
+    <button onclick="addBookmark()" class="engine-btn" style="padding:8px 16px; border-radius:6px; cursor:pointer;">
+      <i class="fas fa-star"></i> 添加到书签/桌面
+    </button>
+  </div>
+
   <!-- 导航 -->
   <div class="bookmarks-section">
     <h2 class="section-title">常用网址导航 - 宇辰自定义导航</h2>
@@ -177,5 +190,23 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    // 打开悬浮球（网页通用，触发浏览器原生弹窗）
+    function openFloatBallExe() {
+      window.location.href = "floatball.exe";
+    }
+
+    // 添加书签
+    function addBookmark() {
+      alert("Ctrl+D 收藏到浏览器\n右键网页 → 创建快捷方式到桌面");
+      try {
+        if (window.sidebar && window.sidebar.addPanel) {
+          window.sidebar.addPanel(document.title, window.location.href, '');
+        } else if (document.all) {
+          window.external.AddFavorite(window.location.href, document.title);
+        }
+      } catch (e) {}
+    }
+  </script>
 </body>
 </html>
