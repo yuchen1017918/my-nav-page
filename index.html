@@ -51,7 +51,23 @@
   <!-- 资源 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
-  <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}</style>
+  <style>
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}
+    .action-btn-group {
+      text-align:center; 
+      margin:20px 0; 
+      display:flex; 
+      gap:12px; 
+      justify-content:center; 
+      flex-wrap:wrap;
+    }
+    .action-btn {
+      padding:8px 16px; 
+      border-radius:6px; 
+      cursor:pointer;
+      text-decoration:none;
+    }
+  </style>
 
   <!-- 验证标签 -->
   <meta name="msvalidate.01" content="F6BA7C59C6699953986186907E754FB4" />
@@ -86,14 +102,14 @@
   </div>
 
   <!-- 功能按钮区 -->
-  <div style="text-align:center; margin:20px 0; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-    <a href="floatball.exe" download="floatball.exe" class="engine-btn" style="padding:8px 16px; border-radius:6px; cursor:pointer;text-decoration:none;">
+  <div class="action-btn-group">
+    <a href="floatball.exe" download class="engine-btn action-btn" aria-label="下载悬浮球工具">
       <i class="fas fa-download"></i> 下载悬浮球工具
     </a>
-    <button onclick="openFloatBallExe()" class="engine-btn" style="padding:8px 16px; border-radius:6px; cursor:pointer;">
+    <button onclick="openFloatBallExe()" class="engine-btn action-btn" aria-label="打开悬浮球工具">
       <i class="fas fa-play"></i> 打开悬浮球
     </button>
-    <button onclick="addBookmark()" class="engine-btn" style="padding:8px 16px; border-radius:6px; cursor:pointer;">
+    <button onclick="addBookmark()" class="engine-btn action-btn" aria-label="添加到书签或桌面">
       <i class="fas fa-star"></i> 添加到书签/桌面
     </button>
   </div>
@@ -102,7 +118,7 @@
   <div class="bookmarks-section">
     <h2 class="section-title">常用网址导航 - 宇辰自定义导航</h2>
     <div class="bookmarks-grid" id="bookmarksGrid" role="list"></div>
-    <button class="add-btn" id="addBookmarkBtn">
+    <button class="add-btn" id="addBookmarkBtn" aria-label="添加网址">
       <i class="fas fa-plus"></i> 添加网址
     </button>
   </div>
@@ -119,7 +135,7 @@
   <div class="settings-panel" id="settingsPanel">
     <div class="panel-header">
       <h3>个性化设置 - 宇辰导航</h3>
-      <button class="close-panel" id="closePanel">
+      <button class="close-panel" id="closePanel" aria-label="关闭设置面板">
         <i class="fas fa-times"></i>
       </button>
     </div>
@@ -145,7 +161,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h3 id="modalTitle">添加网址 - 宇辰导航</h3>
-        <button class="close-modal" id="closeModal">
+        <button class="close-modal" id="closeModal" aria-label="关闭弹窗">
           <i class="fas fa-times"></i>
         </button>
       </div>
