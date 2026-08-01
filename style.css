@@ -20,11 +20,12 @@
 
 /* 深色主题 */
 body.dark {
-  --text: #e5e5e5;
+  --text: #f3f3f3;
   --card: #2a2a2a;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   --search: #2a2a2a;
   --border: #444;
+  background: url('网页深色背景.png') center/cover no-repeat fixed;
 }
 
 body.dark .bookmark-card .name {

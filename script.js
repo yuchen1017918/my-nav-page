@@ -229,9 +229,16 @@ function saveBookmarksToLocal() {
 }
 
 // === 设置 ===
+const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+function applyTheme(theme) {
+  const isDark = theme === 'dark' || (theme === 'auto' && systemDark.matches);
+  document.body.className = isDark ? 'dark' : '';
+}
+
 function loadSettings() {
-  const theme = localStorage.getItem('theme') || 'light';
-  document.body.className = theme === 'dark' ? 'dark' : '';
+  const theme = localStorage.getItem('theme') || 'auto';
+  applyTheme(theme);
   const themeBtn = document.querySelector(`.theme-btn[data-theme="${theme}"]`);
   if (themeBtn) themeBtn.classList.add('active');
 
@@ -242,9 +249,14 @@ function loadSettings() {
 }
 
 function toggleTheme(theme) {
-  document.body.className = theme === 'dark' ? 'dark' : '';
+  applyTheme(theme);
   localStorage.setItem('theme', theme);
 }
+
+systemDark.addEventListener('change', () => {
+  const theme = localStorage.getItem('theme') || 'auto';
+  if (theme === 'auto') applyTheme('auto');
+});
 
 function changeFontSize(size) {
   document.documentElement.style.fontSize = `${size}px`;
