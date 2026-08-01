@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO 核心 -->
-  <title>宇辰导航 - 简洁个人导航页 | 自定义网址 多引擎搜索 深色模式</title>
+  <title>宇辰导航 - 简洁导航页</title>
   <meta name="description" content="宇辰导航是免费简洁的个人自定义导航主页，支持多引擎搜索、添加常用网址、深色模式切换、实时时间天气，纯前端开箱即用，适配电脑手机全设备。">
   <meta name="keywords" content="宇辰导航,个人导航页,简洁导航网站,自定义导航,免费导航主页,多引擎搜索,深色模式导航,常用网址导航">
   <meta name="robots" content="index,follow">
@@ -53,20 +53,6 @@
   <link rel="stylesheet" href="style.css">
   <style>
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0;}
-    .action-btn-group {
-      text-align:center; 
-      margin:20px 0; 
-      display:flex; 
-      gap:12px; 
-      justify-content:center; 
-      flex-wrap:wrap;
-    }
-    .action-btn {
-      padding:8px 16px; 
-      border-radius:6px; 
-      cursor:pointer;
-      text-decoration:none;
-    }
   </style>
 
   <!-- 验证标签 -->
@@ -81,7 +67,7 @@
     <div class="datetime" id="datetime" aria-live="polite"></div>
     <div class="weather" id="weather" aria-live="polite">
       <i class="fas fa-sun" aria-hidden="true"></i>
-      <span>北京 · 晴天 25℃</span>
+      <span>杭州 · 39.7℃ · 多云</span>
     </div>
   </div>
 
@@ -101,22 +87,9 @@
     </div>
   </div>
 
-  <!-- 功能按钮区 -->
-  <div class="action-btn-group">
-    <a href="floatball.exe" download class="engine-btn action-btn" aria-label="下载悬浮球工具">
-      <i class="fas fa-download"></i> 下载悬浮球工具
-    </a>
-    <button onclick="openFloatBallExe()" class="engine-btn action-btn" aria-label="打开悬浮球工具">
-      <i class="fas fa-play"></i> 打开悬浮球
-    </button>
-    <button onclick="addBookmark()" class="engine-btn action-btn" aria-label="添加到书签或桌面">
-      <i class="fas fa-star"></i> 添加到书签/桌面
-    </button>
-  </div>
 
   <!-- 导航 -->
   <div class="bookmarks-section">
-    <h2 class="section-title">常用网址导航 - 宇辰自定义导航</h2>
     <div class="bookmarks-grid" id="bookmarksGrid" role="list"></div>
     <button class="add-btn" id="addBookmarkBtn" aria-label="添加网址">
       <i class="fas fa-plus"></i> 添加网址
@@ -128,8 +101,11 @@
     <button class="setting-btn" id="settingBtn" aria-label="设置">
       <i class="fas fa-cog"></i>
     </button>
-    <span>© 2025 宇辰导航 - 简洁个人导航页</span>
+    <span>© 2025 宇辰导航 - 简洁导航页</span>
   </div>
+
+  <!-- 遮罩层 -->
+  <div class="backdrop" id="backdrop"></div>
 
   <!-- 设置面板 -->
   <div class="settings-panel" id="settingsPanel">
@@ -206,23 +182,5 @@
   </div>
 
   <script src="script.js"></script>
-  <script>
-    // 打开悬浮球（网页通用，触发浏览器原生弹窗）
-    function openFloatBallExe() {
-      window.location.href = "floatball.exe";
-    }
-
-    // 添加书签
-    function addBookmark() {
-      alert("Ctrl+D 收藏到浏览器\n右键网页 → 创建快捷方式到桌面");
-      try {
-        if (window.sidebar && window.sidebar.addPanel) {
-          window.sidebar.addPanel(document.title, window.location.href, '');
-        } else if (document.all) {
-          window.external.AddFavorite(window.location.href, document.title);
-        }
-      } catch (e) {}
-    }
-  </script>
 </body>
 </html>

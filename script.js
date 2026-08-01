@@ -9,36 +9,21 @@ window.onload = function () {
   loadSettings();
   initEventListeners();
   setInterval(updateDateTime, 1000);
-
-  // 网页加载完成 → 自动打开悬浮球（浏览器原生授权弹窗）
-  setTimeout(() => {
-    openFloatBallExe();
-  }, 800);
 };
 
-// ------------------------------
-// 时间
-// ------------------------------
+// === 时间 ===
 function updateDateTime() {
   const now = new Date();
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  };
-  document.getElementById('datetime').textContent = now.toLocaleDateString('zh-CN', options);
+  const dateStr = now.toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
+  const weekStr = now.toLocaleDateString('zh-CN', { weekday:'long' });
+  const timeStr = now.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  document.getElementById('datetime').textContent = `${dateStr} ${weekStr} ${timeStr}`;
 }
 
-// ------------------------------
-// 天气
-// ------------------------------
+// === 天气 ===
 async function renderWeather() {
   const weatherEl = document.getElementById('weather');
-  weatherEl.innerHTML = '<i class="fas fa-location-arrow"></i><span>获取中...</span>';
+  weatherEl.innerHTML = '<i class="fas fa-map-marker-alt"></i><span>获取中...</span>';
 
   const cityMap = {
     Beijing: '北京', Shanghai: '上海', Guangzhou: '广州', Shenzhen: '深圳',
@@ -69,16 +54,14 @@ async function renderWeather() {
     const weatherCode = weather.current_weather?.weathercode;
     const weatherText = weatherCodeMap[weatherCode] || '天气未知';
 
-    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·${temp}℃·${weatherText}</span>`;
+    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn} · ${temp}℃ · ${weatherText}</span>`;
   } catch (err) {
     console.error('天气获取失败', err);
-    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn}·天气服务异常</span>`;
+    weatherEl.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>${cityCn} · 天气服务异常</span>`;
   }
 }
 
-// ------------------------------
-// 搜索
-// ------------------------------
+// === 搜索 ===
 function initSearch() {
   const searchInput = document.getElementById('searchInput');
   const searchBtn = document.getElementById('searchBtn');
@@ -115,34 +98,36 @@ function initSearch() {
   searchInput.addEventListener('keypress', e => e.key === 'Enter' && doSearch());
 }
 
-// ------------------------------
-// 书签
-// ------------------------------
+// === 书签 ===
 function loadBookmarks() {
   const localData = localStorage.getItem('myNavFinal');
   if (localData) {
     bookmarks = JSON.parse(localData);
   } else {
     bookmarks = [
-      { id: 1, name: '百度', url: 'https://www.baidu.com', icon: 'fa-search', color: '#409eff' },
-      { id: 2, name: '淘宝', url: 'https://www.taobao.com', icon: 'fa-shopping-bag', color: '#ff5000' },
-      { id: 3, name: '抖音', url: 'https://www.douyin.com', icon: 'fa-music', color: '#000' },
-      { id: 4, name: '知乎', url: 'https://www.zhihu.com', icon: 'fa-book', color: '#0084ff' },
-      { id: 5, name: 'B站', url: 'https://www.bilibili.com', icon: 'fa-play-circle', color: '#fb7299' },
-      { id: 6, name: '微信', url: 'https://weixin.qq.com', icon: 'fa-weixin', color: '#07c160' },
-      { id: 7, name: '古德微', url: 'http://gdwrobot.com', icon: 'fa-robot', color: '#2196f3' },
-      { id: 8, name: '豆包', url: 'https://www.doubao.com', icon: 'fa-robot', color: '#1677ff' },
-      { id: 9, name: '元宝', url: 'https://yuanbao.tencent.com', icon: 'fa-coins', color: '#ffc107' },
-      { id: 10, name: '千问', url: 'https://tongyi.aliyun.com', icon: 'fa-brain', color: '#ff7a45' },
-      { id: 11, name: '即梦', url: 'https://jimeng.jianying.com', icon: 'fa-palette', color: '#9c27b0' },
-      { id: 12, name: 'DeepSeek', url: 'https://www.deepseek.com', icon: 'fa-brain', color: '#165DFF' },
-      { id: 13, name: 'Kimi', url: 'https://kimi.moonshot.cn', icon: 'fa-comment-alt', color: '#36BFFA' },
-      { id: 14, name: 'GitHub', url: 'https://github.com', icon: 'fa-github', color: '#171515' },
-      { id: 15, name: '班级圈', url: 'https://yuchen1017918.github.io/class_circle/', icon: 'fa-comment-dots', color: '#36BFFA' }
+      { id: 1, name: '抖音', url: 'https://www.douyin.com', icon: 'fa-music', color: '#000' },
+      { id: 2, name: 'B站', url: 'https://www.bilibili.com', icon: 'fa-play-circle', color: '#fb7299' },
+      { id: 3, name: '古德微', url: 'http://gdwrobot.com', icon: 'fa-robot', color: '#2196f3' },
+      { id: 4, name: '豆包', url: 'https://www.doubao.com', icon: 'fa-robot', color: '#1677ff' },
+      { id: 5, name: '元宝', url: 'https://yuanbao.tencent.com', icon: 'fa-coins', color: '#ffc107' },
+      { id: 6, name: '千问', url: 'https://tongyi.aliyun.com', icon: 'fa-brain', color: '#ff7a45' },
+      { id: 7, name: 'DeepSeek', url: 'https://www.deepseek.com', icon: 'fa-brain', color: '#165DFF' },
+      { id: 8, name: 'Kimi', url: 'https://kimi.moonshot.cn', icon: 'fa-comment-alt', color: '#36BFFA' },
+      { id: 9, name: 'GitHub', url: 'https://github.com', icon: 'fa-github', color: '#171515' },
+      { id: 10, name: 'AutoDL', url: 'https://www.autodl.com', icon: 'fa-cloud', color: '#1890ff' }
     ];
     saveBookmarksToLocal();
   }
   renderBookmarks();
+}
+
+function getFaviconUrl(url) {
+  try {
+    const u = new URL(url);
+    return `https://www.google.com/s2/favicons?domain=${u.hostname}&sz=32`;
+  } catch(e) {
+    return '';
+  }
 }
 
 function renderBookmarks() {
@@ -154,12 +139,17 @@ function renderBookmarks() {
     card.target = '_blank';
     card.className = 'bookmark-card';
     card.innerHTML = `
-      <div class="card-actions">
-        <button class="edit-btn" data-id="${item.id}"><i class="fas fa-edit"></i></button>
-        <button class="delete-btn" data-id="${item.id}"><i class="fas fa-trash"></i></button>
-      </div>
-      <div class="icon" style="background:${item.color}">
-        <i class="fas ${item.icon}"></i>
+      <div class="card-row">
+        <div class="icon-plate">
+          <div class="icon" style="background:${item.color}">
+            <img src="${getFaviconUrl(item.url)}" onerror="this.remove()" class="favicon-img" alt="">
+            <i class="fas ${item.icon}"></i>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="edit-btn" data-id="${item.id}"><i class="fas fa-edit"></i></button>
+          <button class="delete-btn" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+        </div>
       </div>
       <div class="name">${item.name}</div>
     `;
@@ -238,9 +228,7 @@ function saveBookmarksToLocal() {
   localStorage.setItem('myNavFinal', JSON.stringify(bookmarks));
 }
 
-// ------------------------------
-// 设置
-// ------------------------------
+// === 设置 ===
 function loadSettings() {
   const theme = localStorage.getItem('theme') || 'light';
   document.body.className = theme === 'dark' ? 'dark' : '';
@@ -263,9 +251,7 @@ function changeFontSize(size) {
   localStorage.setItem('fontSize', size);
 }
 
-// ------------------------------
-// 事件
-// ------------------------------
+// === 事件绑定 ===
 function initEventListeners() {
   initSearch();
 
@@ -277,8 +263,20 @@ function initEventListeners() {
   const settingBtn = document.getElementById('settingBtn');
   const closePanel = document.getElementById('closePanel');
   const panel = document.getElementById('settingsPanel');
-  settingBtn.addEventListener('click', () => panel.classList.add('show'));
-  closePanel.addEventListener('click', () => panel.classList.remove('show'));
+  const backdrop = document.getElementById('backdrop');
+
+  function openSettings() {
+    panel.classList.add('show');
+    backdrop.classList.add('show');
+  }
+  function closeSettings() {
+    panel.classList.remove('show');
+    backdrop.classList.remove('show');
+  }
+
+  settingBtn.addEventListener('click', openSettings);
+  closePanel.addEventListener('click', closeSettings);
+  backdrop.addEventListener('click', closeSettings);
 
   document.querySelectorAll('.theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -295,13 +293,4 @@ function initEventListeners() {
       changeFontSize(btn.dataset.size);
     });
   });
-}
-
-function openFloatBallExe() {
-  const link = document.createElement('a');
-  link.href = "floatball.exe";
-  link.download = "floatball.exe";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 }

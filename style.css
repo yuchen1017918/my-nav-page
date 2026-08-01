@@ -9,7 +9,6 @@
 
 /* 浅色主题 */
 :root {
-  --bg: #f5f7fa;
   --text: #333;
   --card: #fff;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -21,7 +20,6 @@
 
 /* 深色主题 */
 body.dark {
-  --bg: #1a1a1a;
   --text: #e5e5e5;
   --card: #2a2a2a;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -29,8 +27,15 @@ body.dark {
   --border: #444;
 }
 
+body.dark .bookmark-card .name {
+  background: linear-gradient(135deg, #d0d8e8, #a0b0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 body {
-  background: var(--bg);
+  background: url('网页背景.png') center/cover no-repeat fixed;
   color: var(--text);
   min-height: 100vh;
   padding: 20px;
@@ -134,84 +139,143 @@ body {
   max-width: 1000px;
 }
 
-.section-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
 .bookmarks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
 }
 
-/* 卡片 */
+/* 卡片容器 */
 .bookmark-card {
-  background: var(--card);
-  border-radius: 12px;
-  padding: 20px 10px;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 0;
   cursor: pointer;
-  box-shadow: var(--shadow);
+  box-shadow: none;
   position: relative;
   text-decoration: none;
   color: var(--text);
+  transition: transform 0.25s;
 }
 
 .bookmark-card:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
 }
 
-.bookmark-card .icon {
+/* 白色底板（只包图标） */
+.icon-plate {
   width: 50px;
   height: 50px;
+  border-radius: 14px;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.06),
+    0 7px 12px rgba(0,0,0,0.1),
+    0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow 0.25s;
+}
+
+.bookmark-card:hover .icon-plate {
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.08),
+    0 14px 24px rgba(0,0,0,0.14),
+    0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* 图标圆圈 */
+.bookmark-card .icon {
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 22px;
+  font-size: 15px;
+  box-shadow:
+    0 3px 6px rgba(0,0,0,0.2),
+    inset 0 2px 3px rgba(255,255,255,0.3),
+    inset 0 -2px 3px rgba(0,0,0,0.12);
+  position: relative;
+  overflow: hidden;
 }
 
+.favicon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* 名称（底板下方） */
 .bookmark-card .name {
-  font-size: 14px;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
   text-align: center;
+  line-height: 1.3;
+  max-width: 56px;
+  background: linear-gradient(135deg, #2c3e50, #1a1a2e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: transform 0.2s, filter 0.2s;
 }
 
-/* 卡片操作 */
+.bookmark-card:hover .name {
+  transform: translateY(-2px) scale(1.08);
+  filter: brightness(1.3);
+}
+
+/* 图标+按钮横排 */
+.card-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* 操作按钮（图标右侧，绝对定位不占宽度） */
 .card-actions {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  display: none;
-  gap: 5px;
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
+.card-row:hover .card-actions,
 .bookmark-card:hover .card-actions {
-  display: flex;
+  opacity: 1;
 }
 
 .card-actions button {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: none;
-  background: rgba(0, 0, 0, 0.2);
-  color: white;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
 
-.edit-btn:hover { background: #409eff; }
-.delete-btn:hover { background: #f56c6c; }
+.edit-btn { background: #409eff; }
+.edit-btn:hover { background: #66b1ff; }
+.delete-btn { background: #e0e0e0; color: #666 !important; }
+.delete-btn:hover { background: #f56c6c; color: white !important; }
 
 /* 添加按钮 */
 .add-btn {
@@ -256,6 +320,24 @@ body {
 
 .setting-btn:hover {
   color: var(--primary);
+}
+
+/* 遮罩层 */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.backdrop.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* 设置面板 */
@@ -427,7 +509,7 @@ body {
     text-align: center;
   }
   .bookmarks-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
     gap: 15px;
   }
   .settings-panel {
