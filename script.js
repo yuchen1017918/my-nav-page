@@ -105,16 +105,15 @@ function loadBookmarks() {
     bookmarks = JSON.parse(localData);
   } else {
     bookmarks = [
-      { id: 1, name: '抖音', url: 'https://www.douyin.com', icon: 'fa-music', color: '#000' },
-      { id: 2, name: 'B站', url: 'https://www.bilibili.com', icon: 'fa-play-circle', color: '#fb7299' },
-      { id: 3, name: '古德微', url: 'http://gdwrobot.com', icon: 'fa-robot', color: '#2196f3' },
-      { id: 4, name: '豆包', url: 'https://www.doubao.com', icon: 'fa-robot', color: '#1677ff' },
-      { id: 5, name: '元宝', url: 'https://yuanbao.tencent.com', icon: 'fa-coins', color: '#ffc107' },
-      { id: 6, name: '千问', url: 'https://tongyi.aliyun.com', icon: 'fa-brain', color: '#ff7a45' },
-      { id: 7, name: 'DeepSeek', url: 'https://www.deepseek.com', icon: 'fa-brain', color: '#165DFF' },
-      { id: 8, name: 'Kimi', url: 'https://kimi.moonshot.cn', icon: 'fa-comment-alt', color: '#36BFFA' },
-      { id: 9, name: 'GitHub', url: 'https://github.com', icon: 'fa-github', color: '#171515' },
-      { id: 10, name: 'AutoDL', url: 'https://www.autodl.com', icon: 'fa-cloud', color: '#1890ff' }
+      { id: 1, name: 'B站', url: 'https://www.bilibili.com', icon: 'fa-play-circle', color: '#fb7299' },
+      { id: 2, name: '古德微', url: 'http://gdwrobot.com', icon: 'fa-robot', color: '#2196f3' },
+      { id: 3, name: '豆包', url: 'https://www.doubao.com', icon: 'fa-robot', color: '#1677ff' },
+      { id: 4, name: '元宝', url: 'https://yuanbao.tencent.com', icon: 'fa-coins', color: '#ffc107' },
+      { id: 5, name: '千问', url: 'https://tongyi.aliyun.com', icon: 'fa-brain', color: '#ff7a45' },
+      { id: 6, name: 'DeepSeek', url: 'https://www.deepseek.com', icon: 'fa-brain', color: '#165DFF' },
+      { id: 7, name: 'Kimi', url: 'https://kimi.moonshot.cn', icon: 'fa-comment-alt', color: '#36BFFA' },
+      { id: 8, name: 'GitHub', url: 'https://github.com', icon: 'fa-github', color: '#171515' },
+      { id: 9, name: 'AutoDL', url: 'https://www.autodl.com', icon: 'fa-cloud', color: '#1890ff' }
     ];
     saveBookmarksToLocal();
   }
